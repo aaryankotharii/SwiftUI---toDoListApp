@@ -14,6 +14,7 @@ struct ContentView: View {
     @FetchRequest(fetchRequest: ToDoItem.getAllToDoItems()) var toDoItems : FetchedResults<ToDoItem>
      
     @State private var newToDoItem = ""
+    
     var body: some View {
         NavigationView{
             List{
