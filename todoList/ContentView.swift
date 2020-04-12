@@ -39,7 +39,7 @@ struct ContentView: View {
                 }
                 Section(header: Text("To Do's")) {
                     ForEach(self.toDoItems){item in
-                        ToDoItemView(title: item.title!, date: "\(item.date)")
+                        ToDoItemView(title: item.title!, date: item.date!.date)
                     }
                 }
             }
@@ -63,6 +63,12 @@ struct ToDoItemView : View {
                     .font(.caption)
             }
         }
+    }
+}
+
+extension Date {
+    var date : String{
+       return self.date
     }
 }
 
