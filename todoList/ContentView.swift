@@ -37,6 +37,11 @@ struct ContentView: View {
                         }
                     }.font(.headline)
                 }
+                Section(header: Text("To Do's")) {
+                    ForEach(self.toDoItems){item in
+                        ToDoItemView(title: item.title!, date: "\(item.date)")
+                    }
+                }
             }
                 
                 
@@ -45,6 +50,22 @@ struct ContentView: View {
         }
     }
 }
+
+struct ToDoItemView : View {
+    var title : String = ""
+    var date : String = ""
+    var body: some View{
+        HStack{
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.headline)
+                Text(date)
+                    .font(.caption)
+            }
+        }
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
