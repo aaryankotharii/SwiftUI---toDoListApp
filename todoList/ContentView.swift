@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
@@ -39,12 +40,19 @@ struct ContentView: View {
                 }
                 Section(header: Text("To Do's")) {
                     ForEach(self.toDoItems){item in
-                        ToDoItemView(title: item.title!, date: item.date!.date)
+                        ToDoItemView(title: item.title!, date: item.date!.stringValue)
+                    }.onDelete{IndexSet in
+                        let deleteItem = self.toDoItems[IndexSet.first!]
+                        self.moc.delete(deleteItem)
+                        
+                        do {
+                            try self.moc.save()
+                        }catch{
+                            print("error")
+                        }
                     }
                 }
             }
-                
-                
             .navigationBarTitle("My list")
             .navigationBarItems(trailing: EditButton())
         }
@@ -67,11 +75,14 @@ struct ToDoItemView : View {
 }
 
 extension Date {
-    var date : String{
-       return self.date
+    var stringValue : String{
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .medium
+        dateformatter.timeStyle = .medium
+        let dateString = dateformatter.string(from: self)
+        return dateString
     }
 }
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
